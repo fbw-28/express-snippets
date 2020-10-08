@@ -56,8 +56,5 @@ app.get('/teachers/:id', (req, res) => {
 app.post('/teachers', (req, res) => {
   console.log('POST teachers route called');
   console.log(req.body) // this is the data that the frontend SENT to us
-  res.json({
-    name: 'Hadi',
-    id: 9
-  });
+  res.json(req.body);
 });
