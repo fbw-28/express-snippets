@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script>
+
+  const onSubmit = (e, form) => {
+    console.log("Submit handler called")
+    e.preventDefault()
+
+    console.log("Teacher name to send:", form.name.value)
+
+    let teacherName = form.name.value
+
+    // POST call to backend
+    fetch('http://localhost:5000/teachers', {
+      method: "POST",
+      // header Content-Type we tell, whats inside this crazy package we 
+      // are sending. The backend needs to know, otherwise it will ignore it!
+      headers: {
+        "Content-Type": "application/json"
+      },
+      // JSON data we want to send to a backend always needs to 
+      // be send as a STRING over the wire
+      // the backend will parse that string back into an javascript object
+      body: JSON.stringify( { name: teacherName } )
+    })
+  }
+
+</script>
+
+<body>
+  
+  <h1>Add this teacher</h1>
+  <form onsubmit="onSubmit(event, this)">
+    <div>
+      <label for="">Name</label>
+      <input name="name" type="text">
+    </div>
+    <button>Add</button>
+  </form>
+
+</body>
+</html>
