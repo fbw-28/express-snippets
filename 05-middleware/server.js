@@ -6,7 +6,10 @@ app.use( express.json() ) // JSON body parser middleware
 
 app.use( morgan('dev') ) // setup morgan request logger middleware
 
-/** MIDDLEWARE (generic) */
+/** MIDDLEWARE (generic) 
+ * log all requests to routes
+ * (we commented it out below, because morgan does it a bit better :) )
+*/
 // app.use( (req, res, next) => {
 //   console.log(`We called a route ${req.url} `)
 //   next()
@@ -16,21 +19,25 @@ app.use( morgan('dev') ) // setup morgan request logger middleware
  *  this will just run when we call the /get route */
 const checkUser = (req, res, next) => {
   console.log(`We know who you are `)
-  next()
-  
+  next()  
 }
 
+// Another route specific middleware
 const checkTicket = (req, res, next) => {
   console.log("We validate your ticket now...")
 
-  // REJECT a request in middleware!
+  /* example of REJECTING a request in middleware 
+      (request will not pass through to the route)! */
   // res.json({
   //   error: "Your ticket is not valid"
   // })
   next()
 }
 
-/** MIDDLEWARE CHAINING */
+/** MIDDLEWARE CHAINING 
+ * On the /get route we apply TWO middlewares, which must be passed,
+ * BEFORE the user reaches the actual route (=our service)
+*/
 app.get('/get', checkUser, checkTicket, (req, res) => {
   // console.log("GET route / called")  => not needed anymore! Middleware will do it now
   res.json({
