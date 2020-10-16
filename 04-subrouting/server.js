@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 5000;
 
-// Import by sub APIs
+// Import my routers (= child APIs)
 const teacherRouter = require("./routes/teachers")
 const studentRouter = require("./routes/students")
 
@@ -19,9 +19,7 @@ app.get('/', (req, res) => {
   res.send('<h1>Welcome to our API</h1>');
 });
 
-// Hook in our sub APIs into our main API
-
-// hook in routes
+// Hook in our routers (sub APIs) into our main API
 app.use('/teachers', teacherRouter)
 app.use('/students', studentRouter)
 
