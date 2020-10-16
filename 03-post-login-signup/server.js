@@ -36,6 +36,10 @@ app.post('/login', (req, res) => {
 // SIGNUP
 app.post('/signup', (req, res) => {
   let userNew = req.body
+
+  // create a fresh ID for the user
+  userNew.id = Date.now().toString()
+
   users.push(userNew)
   res.json(userNew)
 })
@@ -62,14 +66,18 @@ app.patch('/users/:id', (req, res) => {
   // HOW THE FUCK DO I UPDATE A FUCKING OBJECT 
   // IN A FUCKING ARRAY?
 
+  // TWO Steps...
+
+    // 1) find the given entry...
   let userFound = users.find(user => user.id == id)
 
+    // 2) if found: update the fields of the object using Object.assign method
   if(userFound) {
     Object.assign(userFound, {...req.body})
     res.send(userFound)
   }
   else {
-    res.json({ message: 'What do you think we are here? Please provide someone we know!!!' })
+    res.json({ message: 'What do you think we are doing here? Please provide someone we know!!!' })
   }
 
 })
