@@ -19,7 +19,8 @@ app.use( morgan('dev') ) // setup morgan request logger middleware
  *  this will just run when we call the /get route */
 const checkUser = (req, res, next) => {
   console.log(`We know who you are `)
-  next()  
+  next() // next() allows us to pass through to the next route!
+    // comparable to passing a gate on an airport
 }
 
 // Another route specific middleware
@@ -31,6 +32,8 @@ const checkTicket = (req, res, next) => {
   // res.json({
   //   error: "Your ticket is not valid"
   // })
+
+  // example of CONFIRMING to pass through the request with next()
   next()
 }
 
