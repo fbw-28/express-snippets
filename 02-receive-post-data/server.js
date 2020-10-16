@@ -26,11 +26,6 @@ app.get('/', (req, res) => {
   res.send('<h1>Welcome to our API</h1>');
 });
 
-app.get('/teachers', (req, res) => {
-  console.log('Route /teachers called');
-  res.json(teachers);
-});
-
 app.get('/teachers/add', (req, res) => {
   console.log("Teacher Form called")
   console.log("Current directory", __dirname)
@@ -39,6 +34,11 @@ app.get('/teachers/add', (req, res) => {
   // why? because sendFile does not allow RELATIVE (./) paths
   res.sendFile(__dirname + '/ui/teacher_add.html')
 })
+
+app.get('/teachers', (req, res) => {
+  console.log('Route /teachers called');
+  res.json(teachers);
+});
 
 app.get('/teachers/:id', (req, res) => {
   console.log('Requested single teacher');
@@ -56,5 +56,9 @@ app.get('/teachers/:id', (req, res) => {
 app.post('/teachers', (req, res) => {
   console.log('POST teachers route called');
   console.log(req.body) // this is the data that the frontend SENT to us
+  
+  teachers.push(req.body)
+  
+  console.log(teachers)
   res.json(req.body);
 });

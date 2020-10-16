@@ -17,6 +17,7 @@ app.use( morgan('dev') ) // setup morgan request logger middleware
 const checkUser = (req, res, next) => {
   console.log(`We know who you are `)
   next()
+  
 }
 
 const checkTicket = (req, res, next) => {

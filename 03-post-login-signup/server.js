@@ -6,6 +6,7 @@ let users = [
   { id: '2', email: 'marcell@dci.com', password: 'marcel456'},
 ]
 
+/** MIDDLEWARE */
 app.use( express.json() ) // => req.body
 
 app.get('/', (req, res) => {

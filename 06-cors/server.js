@@ -5,10 +5,12 @@ const app = express();
 const PORT = 5000;
 
 // MIDDLEWARE
-app.use(cors()) // allow access from everywhere!
-app.use(express.json())
-// => takes the incoming body STRING, parses the JSON inside
-// and stores the data in => req.body
+
+app.use(cors()) // allow sending of data to our API from everywhere! 
+  // (= more precisely from a frontend that uses a different domain / port than our backend)
+
+app.use(express.json()) // parses incoming body fields and 
+  // stores them in object req.body
 
 app.listen(PORT, () => {
   console.log(`Started server on port ${PORT}`);
