@@ -6,6 +6,8 @@ const { Schema, model } = mongoose
 let PORT = 5000
 app.listen(PORT, () => console.log("Served started up"))
 
+app.use(express.json()) // make sure we get this req.body thing in our routes!!!
+
 mongoose.connect('mongodb://localhost/blog_db', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -80,6 +82,7 @@ app.get('/seed', async (req, res, next) => {
       answers: [
         { text: "Because Redux is more performant. We always need best performance" },
         { text: "Yeah, but in 95% of apps you actually cannot tell the difference!" },
+        { text: "Yes, but maybe at some point you will have one of those 5% apps that have thousdand of users! Prepare for that!" }
       ]
     },
     {
@@ -101,7 +104,9 @@ app.get('/authors', async (req, res, next) => {
 })
 
 app.get('/posts', async (req, res, next) => {
-  let posts = await Post.find()  
+  let posts = await Post.find()
+    .populate('author')
+
   res.send(posts)
 })
 
@@ -120,6 +125,21 @@ app.get("/posts/:id", async (req, res, next) => {
     // so that way we can provide all data the frontend needs in ONE requests
     
   res.send(post)
+})
+
+
+// UPDATING referenced data
+//
+// find a author by id
+// update the fields of that author
+app.patch('/author/:id', async (req, res, next) => {
+
+  const { id } = req.params
+  // update an item
+  // the {new:true} option is necessary if we want to retrieve back
+  // the UPDATED item from the database (not the item how it was before)
+  let author = await Author.findByIdAndUpdate(id, req.body, { new: true })
+  res.send(author)
 })
 
 
