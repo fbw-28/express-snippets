@@ -44,14 +44,16 @@ app.post('/login', (req, res, next) => {
     // email & password matches => return success!
     if(pwMatch) {
 
-      // create token
+      // create JWT token 
+      // do NOT store sensitive information in the token!
       let token = jwt.sign( { _id: userFound._id }, JWT_SECRET )
 
+      // store the token in a cookie and send the cookie together with the response
       res.cookie('auth', token)
       
       return res.json({
         success: true,
-        token
+        token // send the token along
         // user: userFound
       })
     }
@@ -71,10 +73,11 @@ const auth = (req, res, next) => {
   console.log("Token from cookie: ", token)
 
   try {
-    // verify token and allow user to pass on to route
+    // verify token and if it works => allow user to pass on to route
     let infoInToken = jwt.verify(token, JWT_SECRET)
     next() // => we move on to the route!
   }
+  // if verify fails, it will throw an error => we terminate the response
   catch(err) {
     res.json({ success: false } ) // => we CANCEL the request!
   }
