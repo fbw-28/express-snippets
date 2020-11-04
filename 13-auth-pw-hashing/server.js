@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
-const bcrypt = require("bcryptjs");
-const { networkInterfaces } = require('os');
+const bcrypt = require("bcryptjs"); // npm i bcryptjs (=> NOT npm i bcrypt)
 
 app.use( express.json() ) // setup body parser middleware
 
