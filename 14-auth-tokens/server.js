@@ -85,6 +85,8 @@ const auth = (req, res, next) => {
 }
 
 // ROUTE PROTECTION
+// we inject the auth middleware as a "security gate" that 
+// the user needs to pass before reaching the route
 app.get('/users', auth, (req, res) => {
   console.log("Users route reached...")
   res.send(users);
